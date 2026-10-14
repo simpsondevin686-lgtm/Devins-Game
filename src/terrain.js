@@ -3,7 +3,7 @@ import { SimplexNoise } from './noise.js';
 
 export const CHUNK_SIZE = 64;   // world units per chunk
 export const CHUNK_RES  = 64;   // quads per side (1 unit per quad)
-const VIEW_RADIUS = 4;          // chunks out from player
+const VIEW_RADIUS = (typeof navigator !== "undefined" && (navigator.maxTouchPoints > 0)) ? 2 : 4;
 
 export class Terrain {
   constructor(scene, seed = 1337) {
