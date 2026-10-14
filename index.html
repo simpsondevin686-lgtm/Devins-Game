@@ -2,15 +2,34 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#9fc4e8">
 <title>Devins Game — Planet</title>
 <style>
-  html,body{margin:0;height:100%;overflow:hidden;background:#000;font-family:system-ui,sans-serif}
-  canvas{display:block}
-  #hud{position:fixed;top:8px;left:10px;color:#fff;font-size:12px;text-shadow:0 1px 2px #000;pointer-events:none;opacity:.85}
-  #crosshair{position:fixed;top:50%;left:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:#fff;opacity:.5;pointer-events:none}
-  #overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(0,0,0,.55);color:#fff;font-size:20px;cursor:pointer;user-select:none;backdrop-filter:blur(2px)}
-  #overlay small{font-size:13px;opacity:.7;font-weight:400}
+  html,body{margin:0;height:100%;overflow:hidden;background:#000;
+    font-family:system-ui,sans-serif;touch-action:none;-webkit-user-select:none;user-select:none}
+  canvas{display:block;touch-action:none}
+  #hud{position:fixed;top:calc(8px + env(safe-area-inset-top));left:10px;color:#fff;
+    font-size:12px;text-shadow:0 1px 2px #000;pointer-events:none;opacity:.85}
+  #overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    flex-direction:column;gap:12px;background:rgba(0,0,0,.55);color:#fff;font-size:22px;
+    backdrop-filter:blur(2px);touch-action:none}
+  #overlay small{font-size:13px;opacity:.75}
+  /* Touch UI */
+  #joy{position:fixed;left:calc(20px + env(safe-area-inset-left));
+    bottom:calc(30px + env(safe-area-inset-bottom));
+    width:130px;height:130px;border-radius:50%;
+    background:rgba(255,255,255,.10);border:2px solid rgba(255,255,255,.25);
+    display:none;touch-action:none}
+  #joyKnob{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;
+    border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 2px 8px rgba(0,0,0,.4)}
+  #jump{position:fixed;right:calc(24px + env(safe-area-inset-right));
+    bottom:calc(50px + env(safe-area-inset-bottom));
+    width:88px;height:88px;border-radius:50%;
+    background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.35);
+    color:#fff;font-size:14px;font-weight:600;display:none;touch-action:none;
+    display:none;align-items:center;justify-content:center}
+  .touch #joy,.touch #jump{display:flex}
 </style>
 <script type="importmap">
 {
@@ -23,10 +42,11 @@
 </head>
 <body>
 <div id="hud"></div>
-<div id="crosshair"></div>
+<div id="joy"><div id="joyKnob"></div></div>
+<div id="jump">JUMP</div>
 <div id="overlay">
-  <div>Click to explore</div>
-  <small>WASD move · Shift run · Space jump · Esc release</small>
+  <div id="ovTitle">Tap to explore</div>
+  <small id="ovHelp"></small>
 </div>
 <script type="module" src="./src/main.js"></script>
 </body>
